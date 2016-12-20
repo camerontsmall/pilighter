@@ -1,0 +1,15 @@
+{
+  "name": "pilighter-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Cameron Small",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0",
+    "node-websocket": "^0.1.6"
+  }
+}
