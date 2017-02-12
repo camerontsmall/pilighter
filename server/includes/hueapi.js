@@ -1,6 +1,9 @@
 /* Hue API wrapper */
 
 const request = require('request');
+const bodyParser = require('json-parser');
+
+var jsonParser = bodyParser.json();
 
 function Hue(app, wsServer, db, options){
 
@@ -8,6 +11,7 @@ function Hue(app, wsServer, db, options){
 
     function updateSettings(){
         settings = db.get('hue_settings');
+
         if(!settings){
             settings = {
                 "bridgeIP" : "",
@@ -82,6 +86,10 @@ function Hue(app, wsServer, db, options){
     var updateInterval = setInterval(updateLightList, 5000);
 
     /* Routing */
+
+    app.get('/api/hue/setip', jsonParser, function(req, res){
+        
+    });
 
     app.get('/api/hue/authorise', function(req, res){
        authoriseBridge().pipe(res);

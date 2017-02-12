@@ -26,7 +26,11 @@ var wsServer = new websocket({
 
 var db = new jsonDB(app, wsServer);
 
-db.restore(JSON.parse(fs.readFileSync('appsettings.json')));
+try{
+    db.restore(JSON.parse(fs.readFileSync('appsettings.json')));
+}catch(e){
+    console.log(e);
+}
 
 var hue = new hueAPI(app, wsServer, db);
 
