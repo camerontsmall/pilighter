@@ -9,7 +9,9 @@
   "author": "Cameron Small",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.14.0",
-    "node-websocket": "^0.1.6"
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "request": "^2.79.0",
+    "websocket": "^1.0.24"
   }
 }
