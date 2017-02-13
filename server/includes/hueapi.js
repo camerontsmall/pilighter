@@ -1,13 +1,21 @@
 /* Hue API wrapper */
 
 const request = require('request');
-const bodyParser = require('json-parser');
+const bodyParser = require('body-parser');
 
 var jsonParser = bodyParser.json();
 
 function Hue(app, wsServer, db, options){
+    
+    this.name = "hue";
+
+    this.lightServer = function(){
+
+    }
 
     var settings = {};
+    
+    var lights = {};
 
     function updateSettings(){
         settings = db.get('hue_settings');
@@ -19,6 +27,7 @@ function Hue(app, wsServer, db, options){
             }
             db.post('hue_settings', settings);
         }
+
     }
 
     function authoriseBridge(){
@@ -65,7 +74,16 @@ function Hue(app, wsServer, db, options){
                 uri : path,
                 json : true
             }, function(e, r, body){
-                db.post('hue_lights',body);
+
+                if(!lights){ lights = body;  return; }
+                
+                for(n in lights){
+
+                    
+
+                    var light = lights[n];
+
+                }
             });
         }catch(err){
             console.log(err);
@@ -83,13 +101,15 @@ function Hue(app, wsServer, db, options){
     updateSettings();
     updateLightList();
 
+    db.addUpdateNotifier(function(affected){
+        if(affected.indexOf('hue_settings') != -1){
+            updateSettings();
+        }
+    });
+
     var updateInterval = setInterval(updateLightList, 5000);
 
     /* Routing */
-
-    app.get('/api/hue/setip', jsonParser, function(req, res){
-        
-    });
 
     app.get('/api/hue/authorise', function(req, res){
        authoriseBridge().pipe(res);

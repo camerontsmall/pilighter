@@ -68,6 +68,9 @@ function JsonDB(app, wsServer, debug = true){
         //id must be string and not already in db
         if(!isValidID(id)) return false;
 
+        //Prevent crash
+        if(data == null) data = {};
+
         //Write ID
         data._id = id;
 

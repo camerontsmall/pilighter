@@ -10,7 +10,9 @@ const fs = require('fs');
 var jsonParser = bodyParser.json();
 
 var jsonDB = require('./includes/database.js');
-var hueAPI = require('./includes/hueapi.js');
+var LightManager = require('./includes/lightmanager.js');
+var HueAPI = require('./includes/hueapi.js');
+var PilighterAPI = require('./includes/pilighterapi.js');
 
 /* Server */
 
@@ -32,7 +34,11 @@ try{
     console.log(e);
 }
 
-var hue = new hueAPI(app, wsServer, db);
+var lightManager = new LightManager(app, wsServer, db);
+
+var hue = new HueAPI(app, wsServer, db, lightManager);
+
+var pi = new PilighterAPI(app, wsServer, db, lightManager);
 
 app.use(express.static('web'));
 
