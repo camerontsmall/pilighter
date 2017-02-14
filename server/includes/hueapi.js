@@ -118,7 +118,7 @@ function Hue(app, wsServer, db, lightManager){
         request.put({
             uri: path,
             json : true,
-            body : { on : false }
+            body : { sat : sat }
         });
     }
 
@@ -128,7 +128,7 @@ function Hue(app, wsServer, db, lightManager){
         request.put({
             uri: path,
             json : true,
-            body : { on : false }
+            body : { hue : hue }
         });
     }
 

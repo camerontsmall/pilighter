@@ -44,7 +44,10 @@ app.use(express.static('web'));
 
 console.log("PiLighter 1.0.0");
 
-hue.control.power(1,true);
+hue.control.power(1, true);
+hue.control.brightness(1, 254);
+hue.control.saturation(1, 254);
+hue.control.hue(1,20000);
 
 server.listen(config.port, function () {
     console.log('Listening on port ' + config.port);
