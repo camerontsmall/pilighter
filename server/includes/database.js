@@ -225,23 +225,24 @@ function JsonDB(app, wsServer, debug = true){
     var connectionCount = 0;
 
     wsServer.on('request', function(wsReq){
-        var protocol = wsReq.requestedProtocols[0];
-        if(protocol == 'json-db'){
+        try{
+            var protocol = wsReq.requestedProtocols[0];
+            if(protocol == 'json-db'){
 
-            var id = connectionCount++;
-            var conn = wsReq.accept(protocol);
-            var addr = conn.remoteAddress;
-            //Add to list of connections
-            connections.push(conn);
-            //todo: replace address with something more useful
-            console.log('ws: Client ' + id + ' at ' + addr + ' connected');
+                var id = connectionCount++;
+                var conn = wsReq.accept(protocol);
+                var addr = conn.remoteAddress;
+                //Add to list of connections
+                connections.push(conn);
+                //todo: replace address with something more useful
+                console.log('db: Client ' + id + ' at ' + addr + ' connected');
 
-            conn.on('close', function(){
-                console.log('ws: Client ' + id + ' at ' + addr + ' disconnected');
-            });
-        }else{
-            wsReq.reject();
-        }
+                conn.on('close', function(){
+                    console.log('db: Client ' + id + ' at ' + addr + ' disconnected');
+                });
+            }
+        }catch(e){}
+       
     });
 
     this.notifyClients = function(affected, action){

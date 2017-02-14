@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 var jsonParser = bodyParser.json();
 
-function Hue(app, wsServer, db, options){
+function Hue(app, wsServer, db, lightManager){
     
     this.name = "hue";
 
@@ -73,14 +73,16 @@ function Hue(app, wsServer, db, options){
             request({
                 uri : path,
                 json : true
-            }, function(e, r, body){
+            }, function(e, r, newLights){
 
-                if(!lights){ lights = body;  return; }
+                if(!lights){ lights = {};  return; }
                 
-                for(n in lights){
-
+                for(n in newLights){
                     
-
+                    if(lights[n] == null){ 
+                        
+                    }
+                    
                     var light = lights[n];
 
                 }
@@ -90,14 +92,55 @@ function Hue(app, wsServer, db, options){
         }
     }
 
-    function setLightOn(id){
+    function setLightPower(id, power){
+        var path = `http://${settings.bridgeIP}/api/${settings.token}/lights/${id}/state`;
 
-    }
-
-    function setLightOff(id){
-
+        request.put({
+            uri: path,
+            json : true,
+            body : { on : power }
+        });
     }
     
+    function setBrightness(id, bri){
+        var path = `http://${settings.bridgeIP}/api/${settings.token}/lights/${id}/state`;
+
+        request.put({
+            uri: path,
+            json : true,
+            body : { bri : bri }
+        });
+    }
+
+    function setSaturation(id, sat){
+        var path = `http://${settings.bridgeIP}/api/${settings.token}/lights/${id}/state`;
+
+        request.put({
+            uri: path,
+            json : true,
+            body : { on : false }
+        });
+    }
+
+    function setHue(id, hue){
+         var path = `http://${settings.bridgeIP}/api/${settings.token}/lights/${id}/state`;
+
+        request.put({
+            uri: path,
+            json : true,
+            body : { on : false }
+        });
+    }
+
+    //Control Object
+    var control = {};
+    this.control = control;
+
+    control.power = setLightPower;
+    control.brightness = setBrightness;
+    control.saturation = setSaturation;
+    control.hue = setHue;
+
     updateSettings();
     updateLightList();
 
