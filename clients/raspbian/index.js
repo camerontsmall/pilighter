@@ -109,10 +109,17 @@ function updateOutput(){
 
 function fadeTo(){
     state.on = targetState.on;
+
+    var briDiff = 0;
+    var hueDiff = 0;
+    var satDiff = 0;
     
-    var briDiff = (targetState.bri - state.bri) / ticksLeft;
-    var hueDiff = (targetState.hue - state.hue) / ticksLeft;
-    var satDiff = (targetState.sat - state.sat) / ticksLeft;
+    if(ticksLeft >= 1){
+        briDiff = (targetState.bri - state.bri) / ticksLeft;
+        hueDiff = (targetState.hue - state.hue) / ticksLeft;
+        satDiff = (targetState.sat - state.sat) / ticksLeft;
+    }
+   
 
     state.bri = state.bri + briDiff;
     state.hue = state.hue + hueDiff;
