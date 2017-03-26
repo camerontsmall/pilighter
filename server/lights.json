@@ -31,7 +31,7 @@
             "id" : "gr-main",
             "title" : "Main Lamp",
             "type" : "hue",
-            "hueId" : 0,
+            "hueId" : 1,
             "isSlave" : false,
             "master" : null
         }

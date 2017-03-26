@@ -40,8 +40,6 @@ function hslToRgb(h, s, l){
 
 var http = require('http');
 var express = require('express');
-var memdb = require('./database.js');
-var websocket = require('websocket').server;
 var bodyparser = require('body-parser');
 var Gpio = require('pigpio').Gpio;
 

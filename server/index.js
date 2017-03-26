@@ -43,41 +43,47 @@ var hue = new HueAPI(app, wsServer, db, lightManager);
 var pi = new PilighterAPI(app, wsServer, db, lightManager);
 
 function getLightById(id){
-    lightConfig.lights.forEach(function(light){
+    for(n in lightConfig.lights){
+        var light = lightConfig.lights[n];
+        //console.log(light.id + " ? " + id + " " + (light.id == id));
         if(light.id == id){
             return light;
         }
-    });
+    }
     return false;
 }
 
 function updateSlaves(){
 
+    updateCount = 0;
+
     lightConfig.lights.forEach(function(light){
 
         if(light.isSlave){
             var masterLight = getLightById(light.master);
-
+            console.log(light);
             if(masterLight.type == 'hue' && light.type == 'pi'){
-                hue.getState(masterLight.hueID, function(res){
-
-                    pi.setState(light.ip, res.body.state);
-
+                hue.getState(masterLight.hueID, function(err, res){
+                    var state = res.body.state;
+                    pi.setState(light.ip, state);
                 });
+                
             }
+            
+                updateCount++;
         }
-
     });
+    //console.log("Updating " + updateCount  + " slave lights");
 
 }
 
 hue.getState(1, function(err, res){
-    console.log(res.body);
+    //console.log(res.body);
 });
 
 updateSlaves();
 
-setInterval(updateSlaves, 500);
+//setInterval(updateSlaves, 2000);
 
 server.listen(config.port, function () {
     console.log('Listening on port ' + config.port);

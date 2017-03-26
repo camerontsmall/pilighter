@@ -1,4 +1,6 @@
 
+const request = require('request');
+
 function PiLighterAPI(app, wsServer, db, lightManager){
     
     this.name = "pi";
@@ -28,6 +30,8 @@ function PiLighterAPI(app, wsServer, db, lightManager){
             url : `http://${ip}}:5055/state`,
             json: true,
             body: state
+        }).on('error', function(er){
+            console.log(er);
         });
     }
 
@@ -38,6 +42,8 @@ function PiLighterAPI(app, wsServer, db, lightManager){
     control.brightness = setBrightness;
     control.saturation = setSaturation;
     control.hue = setHue;
+
+    this.setState = setState;
 
 }
 
