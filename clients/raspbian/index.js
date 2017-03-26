@@ -73,11 +73,26 @@ var state = {
 
 function updateOutput(){
 
-    var colours = db.get('colours');
-    var red = colours.r;
-    var green = colours.g;
-    var blue = colours.b;
-    console.log("Set colour to " + red + ',' + green + ',' + blue);
+    var red;
+    var green;
+    var blue;
+
+    if(state.on){
+        
+        bri = state.bri / 254;
+        hue = state.hue / 65535;
+        sat = state.sat / 254;
+
+        var rgb = hslToRgb(hue, sat, bri);
+        red = rgb[0];
+        green = rgb[1];
+        blue = rgb[2];
+
+    }else{
+        red = 0;
+        green = 0;
+        blue = 0;
+    }
 
     redLED.pwmWrite(red);
     greenLED.pwmWrite(green);
@@ -90,11 +105,11 @@ db.post('colours',{ r : 255, g : 255, b : 255});
 app.put('/state', jsonParser, function(req, res){
     try{
 
-        state.on = req.body.state.on;
-        state.bri = req.body.state.bri;
-        state.hue = req.body.state.hue;
-        state.
-
+        if(req.body.state.on !== undefined) state.on = req.body.state.on;
+        if(req.body.state.bri !== undefined) state.bri = req.body.state.bri;
+        if(req.body.state.hue !== undefined) state.hue = req.body.state.hue;
+        if(req.body.state.sat !== undefined) state.sat = req.body.state.sat;
+        updateOutput();
     }catch(e){
         console.log(e);
     }
