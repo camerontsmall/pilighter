@@ -108,7 +108,7 @@ app.put('/state', jsonParser, function(req, res){
 });
 
 app.get('/state', function(req, res){
-    var json = json.encode(state);
+    var json = JSON.stringify(state);
     res.send(json);
 });
 
