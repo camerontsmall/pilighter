@@ -55,6 +55,8 @@ var redLED = new Gpio(17, {mode: Gpio.OUTPUT});
 var greenLED = new Gpio(18, {mode: Gpio.OUTPUT});
 var blueLED = new Gpio(27, {mode: Gpio.OUTPUT});
 
+var ticksLeft = 50;
+
 var state = {
     on: false,
     bri: 254,
@@ -98,14 +100,40 @@ function updateOutput(){
 
 }
 
+function fadeTo(){
+
+    state.on = targetState.on();
+    
+    var briDiff = (targetState.bri - state.bri) / ticksLeft;
+    var hueDiff = (targetState.hue - state.hue) / ticksLeft;
+    var satDiff = (targetState.sat - state.sat) / ticksLeft;
+
+    state.bri += briDiff;
+    state.hue += hueDiff;
+    state.sat += satDiff;
+
+    ticksLeft--;
+
+    updateOutput();
+}
+
+setInterval(fadeTo, 20);
+
 app.put('/state', jsonParser, function(req, res){
     try{
         var inState = req.body;
-        if(inState.on !== undefined) state.on = inState.on;
-        if(inState.bri !== undefined) state.bri = inState.bri;
-        if(inState.hue !== undefined) state.hue = inState.hue;
-        if(inState.sat !== undefined) state.sat = inState.sat;
-        updateOutput();
+
+        if(inState.hue != targetState.hue ||
+            inState.bri != targetState.bri ||
+            inState.sat != targetState.sat){
+                ticksLeft = 50;
+            }
+
+        if(inState.on !== undefined) targetState.on = inState.on;
+        if(inState.bri !== undefined) targetState.bri = inState.bri;
+        if(inState.hue !== undefined) targetState.hue = inState.hue;
+        if(inState.sat !== undefined) targetState.sat = inState.sat;
+
         res.send(200);
     }catch(e){
         console.log(e);

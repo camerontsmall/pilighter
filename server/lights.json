@@ -24,12 +24,20 @@
             "type" : "pi",
             "ip" : "192.168.1.127",
             "port" : "5055",
-            "isSlave" : false,
-            "master" : "gr-main"
+            "isSlave" : true,
+            "master" : "gr-hallway"
         },
         {
             "id" : "gr-main",
             "title" : "Main Lamp",
+            "type" : "hue",
+            "hueId" : 3,
+            "isSlave" : false,
+            "master" : null
+        },
+        {
+            "id" : "gr-hallway",
+            "title" : "Hallway Lamp",
             "type" : "hue",
             "hueId" : 1,
             "isSlave" : false,
