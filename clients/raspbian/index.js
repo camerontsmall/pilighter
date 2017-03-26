@@ -107,6 +107,11 @@ app.put('/state', jsonParser, function(req, res){
     }
 });
 
+app.get('/state', function(req, res){
+    var json = json.encode(state);
+    res.send(json);
+});
+
 server.listen(80, function(){
     console.log("Server running on " + 80);
 });
