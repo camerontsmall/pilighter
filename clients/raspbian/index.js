@@ -94,6 +94,8 @@ function updateOutput(){
         blue = 0;
     }
 
+    console.log(`R:${red} G:${green} B:${blue}`);
+
     redLED.pwmWrite(red);
     greenLED.pwmWrite(green);
     blueLED.pwmWrite(blue);
