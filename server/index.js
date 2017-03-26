@@ -62,7 +62,7 @@ function updateSlaves(){
         if(light.isSlave){
             var masterLight = getLightById(light.master);
             if(masterLight.type == 'hue' && light.type == 'pi'){
-                hue.getState(masterLight.hueID, function(err, res){
+                hue.getState(masterLight.hueId, function(err, res){
                     var state = res.body.state;
                     pi.setState(light.ip, state);
                 });
