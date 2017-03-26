@@ -102,7 +102,7 @@ function updateOutput(){
 
 function fadeTo(){
 
-    state.on = targetState.on();
+    state.on = targetState.on;
     
     var briDiff = (targetState.bri - state.bri) / ticksLeft;
     var hueDiff = (targetState.hue - state.hue) / ticksLeft;
