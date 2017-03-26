@@ -45,8 +45,6 @@ var Gpio = require('pigpio').Gpio;
 
 var jsonParser = bodyparser.json();
 
-var config = require('./config.json');
-
 var app = express();
 
 var server = http.createServer(app);
@@ -107,6 +105,6 @@ app.put('/state', jsonParser, function(req, res){
     }
 });
 
-server.listen(config.port, function(){
-    console.log("Server running on " + config.port);
+server.listen(80, function(){
+    console.log("Server running on " + 80);
 });
