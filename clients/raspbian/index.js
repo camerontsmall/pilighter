@@ -96,15 +96,19 @@ function updateOutput(){
 
     console.log(`R:${red} G:${green} B:${blue}`);
 
-    redLED.pwmWrite(red);
-    greenLED.pwmWrite(green);
-    blueLED.pwmWrite(blue);
+    try{
+        redLED.pwmWrite(red);
+        greenLED.pwmWrite(green);
+        blueLED.pwmWrite(blue);
+    }catch(e){
+        console.log(e);
+        console.log(state);
+    };
 
 }
 
 function fadeTo(){
-
-    if(targetState.on == false) targetState.bri = 0;
+    state.on = targetState.on;
     
     var briDiff = (targetState.bri - state.bri) / ticksLeft;
     var hueDiff = (targetState.hue - state.hue) / ticksLeft;
@@ -135,6 +139,8 @@ app.put('/state', jsonParser, function(req, res){
         if(inState.bri !== undefined) targetState.bri = inState.bri;
         if(inState.hue !== undefined) targetState.hue = inState.hue;
         if(inState.sat !== undefined) targetState.sat = inState.sat;
+
+        if(targetState.on == false){ targetState.on == true; targetState.bri = 0 }
 
         res.send(200);
     }catch(e){
