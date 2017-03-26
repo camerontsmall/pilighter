@@ -108,9 +108,9 @@ function fadeTo(){
     var hueDiff = (targetState.hue - state.hue) / ticksLeft;
     var satDiff = (targetState.sat - state.sat) / ticksLeft;
 
-    state.bri += briDiff;
-    state.hue += hueDiff;
-    state.sat += satDiff;
+    state.bri = state.bri + briDiff;
+    state.hue = state.hue + hueDiff;
+    state.sat = state.sat + satDiff;
 
     ticksLeft--;
 
