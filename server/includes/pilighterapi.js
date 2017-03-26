@@ -27,7 +27,6 @@ function PiLighterAPI(app, wsServer, db, lightManager){
 
     function setState(ip, state){
         var uri =  `http://${ip}/state/`
-        console.log(state);
         request({
             uri : uri,
             method: 'put',

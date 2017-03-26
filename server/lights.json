@@ -14,7 +14,7 @@
             "type" : "pi",
             "ip" : "192.168.1.201",
             "port" : "5055",
-            "isSlave" : "true",
+            "isSlave" : true,
             "master" : "gr-main"
         },
         {
@@ -24,7 +24,7 @@
             "type" : "pi",
             "ip" : "192.168.1.127",
             "port" : "5055",
-            "isSlave" : "true",
+            "isSlave" : false,
             "master" : "gr-main"
         },
         {

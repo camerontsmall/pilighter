@@ -62,6 +62,13 @@ var state = {
     sat: 0
 }
 
+var targetState = {
+    on: false,
+    bri : 254,
+    hue : 0,
+    sat : 0
+}
+
 function updateOutput(){
 
     var red;
@@ -93,9 +100,7 @@ function updateOutput(){
 
 app.put('/state', jsonParser, function(req, res){
     try{
-        console.log("state: Got new state");
         var inState = req.body;
-        console.log(inState);
         if(inState.on !== undefined) state.on = inState.on;
         if(inState.bri !== undefined) state.bri = inState.bri;
         if(inState.hue !== undefined) state.hue = inState.hue;

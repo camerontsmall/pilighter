@@ -82,7 +82,7 @@ hue.getState(1, function(err, res){
 
 updateSlaves();
 
-setInterval(updateSlaves, 5000);
+setInterval(updateSlaves, 300);
 
 server.listen(config.port, function () {
     console.log('Listening on port ' + config.port);
