@@ -26,10 +26,13 @@ function PiLighterAPI(app, wsServer, db, lightManager){
     }
 
     function setState(ip, state){
-        request.put({
-            uri : `http://${ip}}/state`,
+        var uri =  `http://${ip}/state/`
+        request({
+            uri : uri,
+            method: 'put',
             json: true,
             body: state
+        }, function(err, res){
         }).on('error', function(er){
             console.log(er);
         });
