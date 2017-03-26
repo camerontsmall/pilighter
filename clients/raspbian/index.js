@@ -58,14 +58,14 @@ var blueLED = new Gpio(27, {mode: Gpio.OUTPUT});
 var ticksLeft = 50;
 
 var state = {
-    on: false,
+    on: true,
     bri: 254,
     hue: 0,
     sat: 0
 }
 
 var targetState = {
-    on: false,
+    on: true,
     bri : 254,
     hue : 0,
     sat : 0
@@ -104,7 +104,7 @@ function updateOutput(){
 
 function fadeTo(){
 
-    state.on = targetState.on;
+    if(targetState.on == false) targetState.bri = 0;
     
     var briDiff = (targetState.bri - state.bri) / ticksLeft;
     var hueDiff = (targetState.hue - state.hue) / ticksLeft;
