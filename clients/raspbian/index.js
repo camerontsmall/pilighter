@@ -100,8 +100,10 @@ app.put('/state', jsonParser, function(req, res){
         if(req.body.state.hue !== undefined) state.hue = req.body.state.hue;
         if(req.body.state.sat !== undefined) state.sat = req.body.state.sat;
         updateOutput();
+        res.send(200);
     }catch(e){
         console.log(e);
+        res.status(400).send();
     }
 });
 
