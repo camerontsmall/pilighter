@@ -96,10 +96,10 @@ app.put('/state', jsonParser, function(req, res){
         console.log("state: Got new state");
         var inState = req.body;
         console.log(inState);
-        if(inState.on !== undefined) state.on = req.body.state.on;
-        if(inState.bri !== undefined) state.bri = req.body.state.bri;
-        if(inState.hue !== undefined) state.hue = req.body.state.hue;
-        if(inState.sat !== undefined) state.sat = req.body.state.sat;
+        if(inState.on !== undefined) state.on = inState.on;
+        if(inState.bri !== undefined) state.bri = inState.bri;
+        if(inState.hue !== undefined) state.hue = inState.hue;
+        if(inState.sat !== undefined) state.sat = inState.sat;
         updateOutput();
         res.send(200);
     }catch(e){
