@@ -1,0 +1,29 @@
+{
+  "name": "iot-magic",
+  "version": "1.0.0",
+  "description": "Node Internet of Things app for managing multiple Raspberry Pi clients",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/camerontsmall/iot-magic.git"
+  },
+  "keywords": [
+    "iot",
+    "raspberrypi",
+    "node"
+  ],
+  "author": "Cameron Small",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/camerontsmall/iot-magic/issues"
+  },
+  "homepage": "https://github.com/camerontsmall/iot-magic#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "websocket": "^1.0.23"
+  }
+}

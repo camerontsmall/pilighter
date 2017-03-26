@@ -1,0 +1,39 @@
+{
+    "rooms" : [
+        {
+            "id" : "gr",
+            "title" : "Games Room"
+        }
+    ],
+    "lights" :
+    [
+        {
+            "id" : "gr-tv",
+            "title" : "TV Backlight",
+            "rooms" : "gr",
+            "type" : "pi",
+            "ip" : "192.168.1.201",
+            "port" : "5055",
+            "isSlave" : "true",
+            "master" : "gr-main"
+        },
+        {
+            "id" : "gr-sofa",
+            "title" : "Sofa Backlight",
+            "rooms" : "gr",
+            "type" : "pi",
+            "ip" : "192.168.1.127",
+            "port" : "5055",
+            "isSlave" : "true",
+            "master" : "gr-main"
+        },
+        {
+            "id" : "gr-main",
+            "title" : "Main Lamp",
+            "type" : "hue",
+            "hueId" : 0,
+            "isSlave" : false,
+            "master" : null
+        }
+    ]
+}

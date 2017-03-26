@@ -1,6 +1,7 @@
 /* Hue API wrapper */
 
 const request = require('request');
+
 const bodyParser = require('body-parser');
 
 var jsonParser = bodyParser.json();
@@ -132,6 +133,15 @@ function Hue(app, wsServer, db, lightManager){
         });
     }
 
+    function getState(id, callback){
+        var path = `http://${settings.bridgeIP}/api/${settings.token}/lights/${id}/`;
+
+        return request.get({
+            uri: path,
+            json: true
+        }, callback);
+    }
+
     //Control Object
     var control = {};
     this.control = control;
@@ -140,6 +150,8 @@ function Hue(app, wsServer, db, lightManager){
     control.brightness = setBrightness;
     control.saturation = setSaturation;
     control.hue = setHue;
+
+    this.getState = getState;
 
     updateSettings();
     updateLightList();

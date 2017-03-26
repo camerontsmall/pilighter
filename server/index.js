@@ -1,4 +1,5 @@
 var config = require('./config.json');
+var lightConfig = require('./lights.json');
 
 /* Dependencies */
 const http = require('http');
@@ -6,6 +7,7 @@ const express = require('express');
 const websocket = require('websocket').server;
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const request = require('request');
 
 var jsonParser = bodyParser.json();
 
@@ -40,14 +42,38 @@ var hue = new HueAPI(app, wsServer, db, lightManager);
 
 var pi = new PilighterAPI(app, wsServer, db, lightManager);
 
-app.use(express.static('web'));
+function getLightById(id){
+    lightConfig.lights.forEach(function(light){
+        if(light.id == id){
+            return light;
+        }
+    });
+    return false;
+}
 
-console.log("PiLighter 1.0.0");
+function updateSlaves(){
 
-hue.control.power(1, true);
-hue.control.brightness(1, 254);
-hue.control.saturation(1, 254);
-hue.control.hue(1,20000);
+    lightConfig.lights.forEach(function(light){
+
+        if(light.isSlave){
+            var masterLight = getLightById(light.master);
+
+            if(masterLight.type == 'hue' && light.type == 'pi'){
+                hue.getState(masterLight.hueID, function(res){
+
+                    pi.setState(light.ip, res.body.state);
+
+                });
+            }
+        }
+
+    });
+
+}
+
+hue.getState(1, function(err, res){
+    console.log(res.body);
+});
 
 server.listen(config.port, function () {
     console.log('Listening on port ' + config.port);

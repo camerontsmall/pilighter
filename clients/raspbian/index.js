@@ -9,6 +9,7 @@
  * @param   {number}  l       The lightness
  * @return  {Array}           The RGB representation
  */
+
 function hslToRgb(h, s, l){
     var r, g, b;
 
@@ -33,3 +34,72 @@ function hslToRgb(h, s, l){
 
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
+
+
+'use strict';
+
+var http = require('http');
+var express = require('express');
+var memdb = require('./database.js');
+var websocket = require('websocket').server;
+var bodyparser = require('body-parser');
+var Gpio = require('pigpio').Gpio;
+
+var jsonParser = bodyparser.json();
+
+var config = require('./config.json');
+
+var app = express();
+
+var server = http.createServer(app);
+
+var wsApp = new websocket({
+    httpServer : server
+});
+
+
+app.use(express.static('web'));
+
+var redLED = new Gpio(17, {mode: Gpio.OUTPUT});
+var greenLED = new Gpio(18, {mode: Gpio.OUTPUT});
+var blueLED = new Gpio(27, {mode: Gpio.OUTPUT});
+
+var state = {
+    on: false,
+    bri: 254,
+    hue: 0,
+    sat: 0
+}
+
+function updateOutput(){
+
+    var colours = db.get('colours');
+    var red = colours.r;
+    var green = colours.g;
+    var blue = colours.b;
+    console.log("Set colour to " + red + ',' + green + ',' + blue);
+
+    redLED.pwmWrite(red);
+    greenLED.pwmWrite(green);
+    blueLED.pwmWrite(blue);
+
+}
+
+db.post('colours',{ r : 255, g : 255, b : 255});
+
+app.put('/state', jsonParser, function(req, res){
+    try{
+
+        state.on = req.body.state.on;
+        state.bri = req.body.state.bri;
+        state.hue = req.body.state.hue;
+        state.
+
+    }catch(e){
+        console.log(e);
+    }
+});
+
+server.listen(config.port, function(){
+    console.log("Server running on " + config.port);
+});
