@@ -51,11 +51,6 @@ var app = express();
 
 var server = http.createServer(app);
 
-var wsApp = new websocket({
-    httpServer : server
-});
-
-
 app.use(express.static('web'));
 
 var redLED = new Gpio(17, {mode: Gpio.OUTPUT});
