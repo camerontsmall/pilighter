@@ -147,7 +147,7 @@ app.put('/state', jsonParser, function(req, res){
         if(inState.hue !== undefined) targetState.hue = inState.hue;
         if(inState.sat !== undefined) targetState.sat = inState.sat;
 
-        if(targetState.on == false){ targetState.on == true; targetState.bri = 0 }
+        if(targetState.on == false){ targetState.on = true; targetState.bri = 0 }
 
         res.send(200);
     }catch(e){
