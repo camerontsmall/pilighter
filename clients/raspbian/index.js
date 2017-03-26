@@ -95,7 +95,8 @@ function updateOutput(){
 
 app.put('/state', jsonParser, function(req, res){
     try{
-
+        console.log("state: Got new state");
+        console.log(state);
         if(req.body.state.on !== undefined) state.on = req.body.state.on;
         if(req.body.state.bri !== undefined) state.bri = req.body.state.bri;
         if(req.body.state.hue !== undefined) state.hue = req.body.state.hue;
