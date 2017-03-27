@@ -83,9 +83,9 @@ function convertColours(){
     var green;
     var blue;
 
-    var oldRed = targetStateRGB.red;
-    var oldGreen = targetStateRGB.green;
-    var oldBlue = targetStateRGB.blue;
+    var oldRed = Math.floor(targetStateRGB.red);
+    var oldGreen = Math.floor(targetStateRGB.green);
+    var oldBlue = Math.floor(targetStateRGB.blue);
 
     if(targetState.on){
         
@@ -106,7 +106,7 @@ function convertColours(){
         targetStateRGB.blue = 0;
     }
 
-    if(red != oldRed || green != oldGreen || blue != oldBlue){
+    if((Math.floor(red) != oldRed) || (Math.floor(green) != oldGreen) || (Math.floor(blue) != oldBlue){
          ticksLeft = 50;
          console.log(targetState);
     }
