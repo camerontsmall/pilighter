@@ -119,7 +119,7 @@ function fadeTo(){
         state.hue = state.hue + hueDiff;
         state.sat = state.sat + satDiff;
 
-        ticksLeft--;
+        if(briDiff == 0 || hueDiff == 0 || satDiff == 0) ticksLeft--;
     }else{
         state.bri = targetState.bri;
         state.hue = targetState.hue;

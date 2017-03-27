@@ -3,7 +3,7 @@
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-function JsonDB(app, wsServer){
+function JsonDB(app, wsServer, debug = true){
 
     var storage = [];
 
