@@ -131,7 +131,6 @@ function updateOutput(){
 }
 
 function fadeTo(){
-    state.on = targetState.on;
 
     if(ticksLeft >= 1){
         var redDiff = (targetStateRGB.red - stateRGB.bri) / (ticksLeft);
