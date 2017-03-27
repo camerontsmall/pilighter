@@ -55,7 +55,7 @@ var redLED = new Gpio(17, {mode: Gpio.OUTPUT});
 var greenLED = new Gpio(18, {mode: Gpio.OUTPUT});
 var blueLED = new Gpio(27, {mode: Gpio.OUTPUT});
 
-var ticksLeft = 50;
+var ticksLeft = 25;
 
 var targetState = {
     on: true,
@@ -103,7 +103,7 @@ function convertColours(){
     }
 
     if((targetStateRGB.red != oldRed) || (targetStateRGB.green != oldGreen) || (targetStateRGB.blue != oldBlue)){
-         ticksLeft = 50;
+         ticksLeft = 25;
          console.log((targetStateRGB.red) + ":" + (targetStateRGB.green) + ":" + (targetStateRGB.blue));
     }
 
