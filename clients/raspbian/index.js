@@ -111,9 +111,9 @@ function fadeTo(){
     state.on = targetState.on;
 
     if(ticksLeft >= 1){
-        var briDiff = (targetState.bri - state.bri) / ticksLeft;
-        var hueDiff = (targetState.hue - state.hue) / ticksLeft;
-        var satDiff = (targetState.sat - state.sat) / ticksLeft;
+        var briDiff = (targetState.bri - state.bri) / (1 / ticksLeft);
+        var hueDiff = (targetState.hue - state.hue) / (1 / ticksLeft);
+        var satDiff = (targetState.sat - state.sat) / (1 / ticksLeft);
 
         state.bri = state.bri + briDiff;
         state.hue = state.hue + hueDiff;
@@ -130,7 +130,7 @@ function fadeTo(){
     updateOutput();
 }
 
-setInterval(fadeTo, 20);
+setInterval(fadeTo, 40);
 
 app.put('/state', jsonParser, function(req, res){
     try{
@@ -139,7 +139,7 @@ app.put('/state', jsonParser, function(req, res){
         if(inState.hue != targetState.hue ||
             inState.bri != targetState.bri ||
             inState.sat != targetState.sat){
-                ticksLeft = 50;
+                ticksLeft = 25;
             }
 
         if(inState.on !== undefined) targetState.on = inState.on;
