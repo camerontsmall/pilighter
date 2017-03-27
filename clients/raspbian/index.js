@@ -133,7 +133,7 @@ function updateOutput(){
 function fadeTo(){
 
     if(ticksLeft >= 1){
-        var redDiff = (targetStateRGB.red - stateRGB.bri) / (ticksLeft);
+        var redDiff = (targetStateRGB.red - stateRGB.red) / (ticksLeft);
         var greenDiff = (targetStateRGB.green - stateRGB.green) / (ticksLeft);
         var blueDiff = (targetStateRGB.blue - stateRGB.blue) / (ticksLeft);
 
