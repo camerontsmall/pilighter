@@ -57,13 +57,6 @@ var blueLED = new Gpio(27, {mode: Gpio.OUTPUT});
 
 var ticksLeft = 50;
 
-var state = {
-    on: true,
-    bri: 254,
-    hue: 0,
-    sat: 0
-}
-
 var targetState = {
     on: true,
     bri : 254,
@@ -71,30 +64,59 @@ var targetState = {
     sat : 0
 }
 
-function updateOutput(){
+
+var stateRGB = {
+    red : 0,
+    green : 0,
+    blue: 0
+}
+
+var targetStateRGB = {
+    red : 0,
+    green : 0,
+    blue: 0
+}
+
+function convertColours(){
 
     var red;
     var green;
     var blue;
 
-    if(state.on){
+    var oldRed = targetStateRGB.red;
+    var oldGreen = targetStateRGB.green;
+    var oldBlue = targetStateRGB.blue;
+
+    if(targetState.on){
         
-        bri = state.bri / 254;
-        hue = state.hue / 65535;
-        sat = state.sat / 254;
+        bri = targetState.bri / 254;
+        hue = targetState.hue / 65535;
+        sat = targetState.sat / 254;
 
         var rgb = hslToRgb(hue, sat, bri);
-        red = rgb[0];
-        green = rgb[1];
-        blue = rgb[2];
+
+        targetStateRGB.red = rgb[0];
+        targetStateRGB.green = rgb[1];
+        targetStateRGB.blue = rgb[2];
 
     }else{
-        red = 0;
-        green = 0;
-        blue = 0;
+
+        targetStateRGB.red = 0;
+        targetStateRGB.green = 0;
+        targetStateRGB.blue = 0;
     }
 
+    if(red != oldRed || green != oldGreen || blue != oldBlue) ticksLeft = 50;
+
     //console.log(`R:${red} G:${green} B:${blue}`);
+
+}
+
+function updateOutput(){
+
+    var red = Math.floor(stateRGB.red);
+    var green = Math.floor(stateRGB.green);
+    var blue = Math.floor(stateRGB.blue);
 
     try{
         redLED.pwmWrite(red);
@@ -102,8 +124,9 @@ function updateOutput(){
         blueLED.pwmWrite(blue);
     }catch(e){
         console.log(e);
-        console.log(state);
+        console.log(stateRGB);
     };
+    
 
 }
 
@@ -111,43 +134,37 @@ function fadeTo(){
     state.on = targetState.on;
 
     if(ticksLeft >= 1){
-        var briDiff = (targetState.bri - state.bri) / (ticksLeft);
-        var hueDiff = (targetState.hue - state.hue) / (ticksLeft);
-        var satDiff = (targetState.sat - state.sat) / (ticksLeft);
+        var redDiff = (targetStateRGB.red - stateRGB.bri) / (ticksLeft);
+        var greenDiff = (targetStateRGB.green - stateRGB.green) / (ticksLeft);
+        var blueDiff = (targetStateRGB.blue - stateRGB.blue) / (ticksLeft);
 
-        state.bri = state.bri + briDiff;
-        state.hue = state.hue + hueDiff;
-        state.sat = state.sat + satDiff;
+        stateRGB.red = stateRGB.red + redDiff;
+        stateRGB.green = stateRGB.green + greenDiff;
+        stateRGB.blue = stateRGB.blue + blueDiff;
 
-        if(briDiff == 0 || hueDiff == 0 || satDiff == 0) ticksLeft--;
+        if(redDiff != 0 || greenDiff != 0 || blueDiff != 0) ticksLeft--;
     }else{
-        state.bri = targetState.bri;
-        state.hue = targetState.hue;
-        state.sat = targetState.sat;
+        stateRGB.red = targetStateRGB.red;
+        stateRGB.green = targetStateRGB.green;
+        stateRGB.blue = targetStateRGB.blue;
     }
 
 
     updateOutput();
 }
 
-setInterval(fadeTo, 40);
+setInterval(fadeTo, 20);
 
 app.put('/state', jsonParser, function(req, res){
     try{
         var inState = req.body;
-
-        if(inState.hue != targetState.hue ||
-            inState.bri != targetState.bri ||
-            inState.sat != targetState.sat){
-                ticksLeft = 25;
-            }
 
         if(inState.on !== undefined) targetState.on = inState.on;
         if(inState.bri !== undefined) targetState.bri = inState.bri;
         if(inState.hue !== undefined) targetState.hue = inState.hue;
         if(inState.sat !== undefined) targetState.sat = inState.sat;
 
-        if(targetState.on == false){ targetState.on = true; targetState.bri = 0 }
+        convertColours();
 
         res.send(200);
     }catch(e){
