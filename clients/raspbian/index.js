@@ -102,7 +102,7 @@ function convertColours(){
         targetStateRGB.blue = 0;
     }
 
-    if((targetState.red != oldRed) || (targetState.green != oldGreen) || (targetState.blue != oldBlue)){
+    if((targetStateRGB.red != oldRed) || (targetStateRGB.green != oldGreen) || (targetStateRGB.blue != oldBlue)){
          ticksLeft = 50;
          console.log((targetStateRGB.red - oldRed) + ":" + (targetStateRGB.green - oldGreen) + ":" + (targetStateRGB.blue - oldBlue));
     }
