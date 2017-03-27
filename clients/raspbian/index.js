@@ -102,7 +102,7 @@ function convertColours(){
         targetStateRGB.blue = 0;
     }
 
-    if((Math.floor(targetState.red) != oldRed) || (Math.floor(targetState.green) != oldGreen) || (Math.floor(targetState.blue) != oldBlue)){
+    if((targetState.red != oldRed) || (targetState.green != oldGreen) || (targetState.blue != oldBlue){
          ticksLeft = 50;
          console.log(targetStateRGB);
          console.log(oldRed + " " + oldGreen + " " + oldBlue);
