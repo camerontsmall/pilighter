@@ -111,9 +111,9 @@ function fadeTo(){
     state.on = targetState.on;
 
     if(ticksLeft >= 1){
-        var briDiff = (targetState.bri - state.bri) / (1 / ticksLeft);
-        var hueDiff = (targetState.hue - state.hue) / (1 / ticksLeft);
-        var satDiff = (targetState.sat - state.sat) / (1 / ticksLeft);
+        var briDiff = (targetState.bri - state.bri) / (ticksLeft);
+        var hueDiff = (targetState.hue - state.hue) / (ticksLeft);
+        var satDiff = (targetState.sat - state.sat) / (ticksLeft);
 
         state.bri = state.bri + briDiff;
         state.hue = state.hue + hueDiff;
