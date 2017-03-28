@@ -93,7 +93,7 @@ function convertColours(){
 
         targetStateRGB.red = rgb[0];
         targetStateRGB.green = rgb[1];
-        targetStateRGB.blue = rgb[2];
+        targetStateRGB.blue = rgb[2]o;
 
     }else{
 
@@ -172,7 +172,7 @@ app.put('/state', jsonParser, function(req, res){
 });
 
 app.get('/state', function(req, res){
-    var json = JSON.stringify(state);
+    var json = JSON.stringify(targetState);
     res.send(json);
 });
 
