@@ -93,7 +93,7 @@ function convertColours(){
 
         targetStateRGB.red = rgb[0];
         targetStateRGB.green = rgb[1];
-        targetStateRGB.blue = rgb[2]o;
+        targetStateRGB.blue = rgb[2];
 
     }else{
 
