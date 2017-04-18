@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Converts an HSV color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
@@ -156,7 +154,6 @@ app.put('/state', jsonParser, function(req, res){
         if(inState.bri !== undefined) targetState.bri = inState.bri;
         if(inState.hue !== undefined) targetState.hue = inState.hue;
         if(inState.sat !== undefined) targetState.sat = inState.sat;
-        if(inState.xy !== undefined) targetState.xy = inState.xy;
 
         convertColours();
 
