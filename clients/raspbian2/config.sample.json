@@ -1,6 +1,6 @@
 {
     "bridgeIP" : "",
-    "brideKey" : "",
+    "bridgeKey" : "",
     "masterID" : 0,
     "pollRate" : 100
 }

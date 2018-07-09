@@ -56,15 +56,17 @@ function xyBriToRgb(x, y, bri){
     }
 }
 
-hueStateToRgb(state){
+function hueStateToRgb(state){
 
   if(!state.on) return {r : 0, g : 0, b : 0};
 
-  if(state.mode == "hsv"){
-    return xyBriToRgb(state.xy[0],state.xy[1],bri);
-  }else if(state.mode == "hsv"){
+  if(state.colormode == "xy"){
+    return xyBriToRgb(state.xy[0],state.xy[1], state.bri);
+  }else if(state.colormode == "hsv"){
     return hsvToRgb(state.hue, state.sat, state.bri);
   }
+
+  return { r : 0, g : 0, b : 0}
 }
 
 

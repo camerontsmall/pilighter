@@ -1,26 +1,35 @@
 
 
-//var Gpio = require('pigpio').Gpio;
+var Gpio = require('pigpio').Gpio;
 var colourConversions = require('./colours.js');
 var request = require('request');
 
 const config = require('./config.json');
 
-/* var redLED = new Gpio(17, {mode: Gpio.OUTPUT});
+var redLED = new Gpio(17, {mode: Gpio.OUTPUT});
 var greenLED = new Gpio(18, {mode: Gpio.OUTPUT});
-var blueLED = new Gpio(27, {mode: Gpio.OUTPUT}); */
+var blueLED = new Gpio(27, {mode: Gpio.OUTPUT});
 
 
 function updateLightState(){
 
     var url = `http://${config.bridgeIP}/api/${config.bridgeKey}/lights/${config.masterID}`;
 
-    request.get(url, (res) => {
+    request.get({
+        uri : url,
+        json : true
+    }, (err, res) => {
 
-        console.log(res);
-        var state = res.state;
-        var rgb = colourConversions.hueStateToRgb(state)
-        setRGBValues(rgb);
+        if(err){ console.log(err); return; }
+        
+        try{
+            
+            var state = res.body.state;
+            var rgb = colourConversions.hueStateToRgb(state);
+            setRGBValues(rgb);
+        }catch(err){
+            console.log(err);
+        }
     });
 
 }
@@ -34,9 +43,9 @@ function setRGBValues(rgb){
     var blue = Math.floor(rgb.b);
 
     try{
-        /* redLED.pwmWrite(red);
+        redLED.pwmWrite(red);
         greenLED.pwmWrite(green);
-        blueLED.pwmWrite(blue); */
+        blueLED.pwmWrite(blue);
     }catch(e){
         console.log(e);
     };
@@ -44,4 +53,4 @@ function setRGBValues(rgb){
 
 var repeat = setInterval(updateLightState, config.pollRate);
 
-setRGBValues(255,255,255);
+setRGBValues({r : 225, g : 255, b : 255});
