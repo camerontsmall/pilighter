@@ -1,0 +1,6 @@
+{
+    "bridgeIP" : "",
+    "brideKey" : "",
+    "masterID" : 0,
+    "pollRate" : 100
+}
