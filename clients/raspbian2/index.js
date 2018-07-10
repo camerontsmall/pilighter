@@ -36,8 +36,6 @@ function updateLightState(){
 
 function setRGBValues(rgb){
 
-    console.log(rgb);
-
     var red = Math.floor(rgb.r);
     var green = Math.floor(rgb.g);
     var blue = Math.floor(rgb.b);
@@ -54,3 +52,5 @@ function setRGBValues(rgb){
 var repeat = setInterval(updateLightState, config.pollRate);
 
 setRGBValues({r : 225, g : 255, b : 255});
+
+console.log("Starting light receiver");
